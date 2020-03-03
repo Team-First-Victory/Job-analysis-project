@@ -10,5 +10,6 @@ namespace Job_analysis_project
     /// </summary>
     class Statistics
     {
+        
     }
 }
