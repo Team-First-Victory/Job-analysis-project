@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Net;
 
+
 namespace Job_analysis_project_console
 {
     class Web_Connectors_Test
@@ -18,13 +19,24 @@ namespace Job_analysis_project_console
         {
             //Test();
             Web_Connectors_Test wct = new Web_Connectors_Test();
-            wct.JobExtractorFromIndeed(1);
-            foreach(var key in wct.GetJobList().Keys)
+            wct.JobExtractorFromIndeed(50);
+            foreach (var key in wct.GetJobList().Keys)
             {
-                foreach(var key2 in wct.GetJobList()[key].Keys)
-                Console.WriteLine(wct.GetJobList()[key][key2]);
+                foreach (var key2 in wct.GetJobList()[key].Keys)
+                {
+                    using (System.IO.StreamWriter file =
+                    new System.IO.StreamWriter(@"C:\Users\elias\Desktop\description.txt", true))
+                    {
+                        //Console.WriteLine(wct.GetJobList()[key][key2]);
+                        file.WriteLine(wct.GetJobList()[key][key2]);
+                    }
+*//*                    System.IO.File.WriteAllText(@"C:\Users\elias\Desktop\description.txt", wct.GetJobList()[key][key2]);
+                    Console.WriteLine(wct.GetJobList()[key][key2]);*//*
+                }
             }
         }*/
+
+
 
         private Dictionary<string, Dictionary<string, string>> JobList;
 
@@ -50,44 +62,53 @@ namespace Job_analysis_project_console
                     foreach (var node in nodes)
                     {
                         Dictionary<string, string> job = new Dictionary<string, string>();
-                        var jobid = node.GetAttributeValue("id", "");
-                        if(JobList.ContainsKey("jobid"))
+                        string jobid = node.GetAttributeValue("id", "");
+                        if (!JobList.ContainsKey(jobid) && jobid.Length!=0)
                         {
-                            continue;
-                        }
-                        var datajk = node.GetAttributeValue("data-jk", "");
-                        try
-                        {
-                            var company = node.SelectSingleNode("//*[@id=\"" + jobid + "\"]/div[2]/div[1]/span").InnerText;
-                            job.Add("Company", company);
-                            var location = node.SelectSingleNode("//*[@id=\"recJobLoc_" + datajk + "\"]").GetAttributeValue("data-rc-loc");
-                            job.Add("Location", location);
-                            if (company.Trim().ToLower().Contains("seen") && company.Trim().ToLower().Contains("indeed"))
+                            var datajk = node.GetAttributeValue("data-jk", "");
+                            try
+                            {
+                                
+                                var company = node.SelectSingleNode("//*[@id=\"" + jobid + "\"]/div[2]/div[1]/span").InnerText;
+                                job.Add("Company", company);
+                                var location = node.SelectSingleNode("//*[@id=\"recJobLoc_" + datajk + "\"]").GetAttributeValue("data-rc-loc");
+                                job.Add("Location", location);
+                                if (company.Trim().ToLower().Contains("seen") && company.Trim().ToLower().Contains("indeed"))
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    var url2 = prefix + datajk;
+                                    if (webGet.Load(url2) is HtmlDocument document2)
+                                    {
+                                        var nodes2 = document2.DocumentNode.SelectNodes("//div[contains(@class,'jobsearch-ViewJobLayout-jobDisplay')]").ToList();
+                                        foreach (var node2 in nodes2)
+                                        {
+                                            var title = node2.SelectSingleNode("//h3[contains(@class,'jobsearch-JobInfoHeader-title')]").InnerText;
+                                            job.Add("Title", title);
+                                            var detail = node2.SelectSingleNode("//div[contains(@class,'jobDescriptionText')]").InnerText;
+                                            job.Add("Detail", detail);
+                                            Console.WriteLine(detail);
+                                            using (System.IO.StreamWriter file =
+new System.IO.StreamWriter(@"C:\Users\elias\Desktop\description.txt", true))
+                                            {
+                                                //Console.WriteLine(wct.GetJobList()[key][key2]);
+                                                file.WriteLine(detail);
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+                            catch (Exception ex)
                             {
                                 continue;
                             }
-                            else
-                            {
-                                var url2 = prefix + datajk;
-                                if (webGet.Load(url2) is HtmlDocument document2)
-                                {
-                                    var nodes2 = document2.DocumentNode.SelectNodes("//div[contains(@class,'jobsearch-ViewJobLayout-jobDisplay')]").ToList();
-                                    foreach (var node2 in nodes2)
-                                    {
-                                        var title = node2.SelectSingleNode("//h3[contains(@class,'jobsearch-JobInfoHeader-title')]").InnerText;
-                                        job.Add("Title", title);
-                                        var detail = node2.SelectSingleNode("//div[contains(@class,'jobDescriptionText')]").InnerText;
-                                        job.Add("Detail", detail);
-                                    }
-                                }
+                            JobList.Add(jobid, job);
+                        }
+                            
 
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            continue;
-                        }
-                        JobList.Add(jobid, job);
                     }
                 }
             }

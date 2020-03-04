@@ -15,7 +15,7 @@ namespace Job_analysis_project
         public string Location { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public List<string> Keywords { get; set; }
+        public Dictionary<string, int> Stat { get; set; }
         public Job()
         {
             JobID = "Empty";
@@ -23,7 +23,7 @@ namespace Job_analysis_project
             Location = "Empty";
             Title = "Empty";
             Description = "Empty";
-            Keywords = null;
+            Stat = new Dictionary<string, int>();
         }
     }
 }

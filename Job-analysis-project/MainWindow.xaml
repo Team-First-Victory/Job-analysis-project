@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Job_analysis_project"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="788" Width="1301">
     <Grid>
-        
+        <WebBrowser x:Name="DisplayChart" HorizontalAlignment="Left" Height="737" Margin="10,10,0,0" VerticalAlignment="Top" Width="1193" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+        <Button x:Name="Show" Content="Show" HorizontalAlignment="Left" Margin="1208,10,0,0" VerticalAlignment="Top" Width="75" Click="Show_Click"/>
     </Grid>
 </Window>

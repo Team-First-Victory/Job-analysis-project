@@ -45,7 +45,7 @@ namespace Job_analysis_project
                     {
                         Dictionary<string, string> job = new Dictionary<string, string>();
                         var jobid = node.GetAttributeValue("id", "");
-                        if (JobList.ContainsKey("jobid"))
+                        if (JobList.ContainsKey(jobid))
                         {
                             continue;
                         }
@@ -70,8 +70,8 @@ namespace Job_analysis_project
                                     {
                                         var title = node2.SelectSingleNode("//h3[contains(@class,'jobsearch-JobInfoHeader-title')]").InnerText;
                                         job.Add("Title", title);
-                                        var detail = node2.SelectSingleNode("//div[contains(@class,'jobDescriptionText')]").InnerText;
-                                        job.Add("Detail", detail);
+                                        var description = node2.SelectSingleNode("//div[contains(@class,'jobDescriptionText')]").InnerText;
+                                        job.Add("Description", description);
                                     }
                                 }
 

@@ -19,9 +19,21 @@ namespace Job_analysis_project
     /// </summary>
     public partial class MainWindow : Window
     {
+        Analyzer analyzer = new Analyzer();
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ShowChart()
+        {
+            analyzer.Analyze((int)DisplayChart.ActualWidth, (int)DisplayChart.ActualHeight);           
+            DisplayChart.NavigateToString(analyzer.Chart.ChartHTML);
+        }
+
+        private void Show_Click(object sender, RoutedEventArgs e)
+        {
+            ShowChart();
         }
     }
 }
