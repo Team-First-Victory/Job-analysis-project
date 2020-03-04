@@ -10,5 +10,18 @@ namespace Job_analysis_project
     /// </summary>
     class Job_Dictionary
     {
+        private List<string> definitionList = new List<string>();
+        public List<string> GetKeyWords(string Description)
+        {
+            List<string> keywords = new List<string>();
+            foreach (var keyword in definitionList)
+            {
+                if (Description.ToLower().Contains(keyword.ToLower()))
+                {
+                    keywords.Add(keyword);
+                }
+            }
+            return keywords;
+        }
     }
 }
