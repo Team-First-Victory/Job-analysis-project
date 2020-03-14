@@ -14,4 +14,5 @@ Visual Studio standard.
 ![Result](/Chart.PNG)
 
 ## Tech/framework used
+DotNet Framework 4.6.1
 Used ScrapySharp with HtmlAgilityPack.
