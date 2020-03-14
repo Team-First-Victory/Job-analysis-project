@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Forms;
+using System.Threading;
 
 namespace Job_analysis_project
 {
@@ -20,6 +22,7 @@ namespace Job_analysis_project
     public partial class MainWindow : Window
     {
         Analyzer analyzer = new Analyzer();
+        Loading_Screen ls = new Loading_Screen();
         public MainWindow()
         {
             InitializeComponent();
@@ -31,9 +34,25 @@ namespace Job_analysis_project
             DisplayChart.NavigateToString(analyzer.Chart.ChartHTML);
         }
 
+        [STAThread]
+        private void Loading()
+        {
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+            System.Windows.Forms.Application.Run(ls);
+        }
+
         private void Show_Click(object sender, RoutedEventArgs e)
         {
+            Thread ld = new Thread(Loading);
+            ld.Start();
             ShowChart();
+            ld.Abort();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

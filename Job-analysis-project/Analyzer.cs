@@ -33,7 +33,7 @@ namespace Job_analysis_project
                     Description = result[jobID]["Description"],
                     Stat = Job_Dictionary.GetResult(result[jobID]["Description"])
                 });
-                string path = @"C:\Users\elias\Desktop\test.txt";
+                /*string path = @"C:\Users\elias\Desktop\test.txt";
                 if (!File.Exists(path))
                 {
                     // Create a file to write to.
@@ -45,7 +45,7 @@ namespace Job_analysis_project
                 using (StreamWriter sw = File.AppendText(path))
                 {
                     sw.WriteLine(result[jobID]["Description"]);
-                }
+                }*/
             }
         }
 

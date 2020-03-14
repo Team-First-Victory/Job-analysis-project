@@ -60,7 +60,7 @@ namespace Job_analysis_project
             svg += @"}" + "\n";
             svg += @"</style>" + "\n";
             svg += @"</head>" + "\n";
-            svg += @"<h1>Job Analysis Chart (Sample: " + jobCount + @")</h1>" + "\n";
+            svg += @"<h1>Software Engineer Job Analysis Chart (Sample: " + jobCount + @")</h1>" + "\n";
             svg += @"<svg class=""chart"" width = """ + width + @""" height = """ + height + @""">" + "\n";
             int widthIncrement = (width - maxLength * keywordSize) / dataset.Values.Max();
             foreach (var key in dataset.Keys)

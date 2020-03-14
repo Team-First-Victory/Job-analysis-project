@@ -77,7 +77,7 @@ namespace Job_analysis_project
 
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             continue;
                         }
